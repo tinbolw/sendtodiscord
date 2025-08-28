@@ -14,7 +14,7 @@ Developed as a proof of concept using Windows Forms with C#.
 9. The program is now ready to render and upload replays.
 
 ## Notes
-- To cancel a render, "Show danser terminal?" must be checked in settings, and then Ctrl-C will exit danser when performed in a danser terminal. This may result in a temp video folder in the videos directory of the danser installation.
+- To cancel a render, "Show danser terminal?" must be checked in settings, and then Ctrl-C will exit danser when performed in a danser terminal. This may result in a temp video folder left behind in the videos directory of the danser installation.
 - User configuration is stored at `%APPDATA%/sendtodiscord/`.
 - dansertodiscord was developed to work with version 0.11.0 of danser. Other versions may work, but have not been tested.
 ## Example Settings
