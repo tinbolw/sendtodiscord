@@ -1,5 +1,6 @@
 # dansertodiscord
 Render osu! replays using [danser-go](https://github.com/Wieku/danser-go) and upload them to a Discord channel through webhooks.
+Developed as a proof of concept using Windows Forms with C#.
 
 ## Usage
 1. Install [danser-go](https://github.com/Wieku/danser-go).
