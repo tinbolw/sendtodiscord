@@ -9,7 +9,7 @@ Developed as a proof of concept using Windows Forms with C#.
 4. Click on the newly created webhook and edit it as you please. Then click "Copy Webhook URL".
 5. In the Settings tab of sendtodiscord, paste the webhook URL in the specified text box.
 6. Select the danser binary (danser-cli.exe) from your danser installation.
-7. Select a danser settings file to use. An example settings file is included in the repository, see [Example Settings](#example-settings).
+7. Select a danser settings file to use. An [example settings file](example-settings.json) is included in the repository, see [Example Settings](#example-settings).
 8. In the Render tab, select a replay file and optionally, the start and end times of the replay.
 9. The program is now ready to render and upload replays.
 
