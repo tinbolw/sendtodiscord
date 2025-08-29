@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form));
-            webhookUrlTextbox = new TextBox();
+            webhookUrlTextBox = new TextBox();
             danserBinaryLabel = new Label();
-            danserBinaryPathTextbox = new TextBox();
+            danserBinaryPathTextBox = new TextBox();
             selectDanserBinaryButton = new Button();
             selectReplayFileButton = new Button();
             replayFileLabel = new Label();
@@ -42,22 +42,29 @@
             webhookUrlLabel = new Label();
             mainTabControl = new TabControl();
             renderTab = new TabPage();
-            endTimeTextBox = new TextBox();
-            startTimeTextBox = new TextBox();
-            endTimeLabel = new Label();
-            startTimeLabel = new Label();
+            uploadProgressLabel = new Label();
+            uploadProgressBar = new ProgressBar();
+            renderLatestReplayButton = new Button();
+            danserArgumentsTextBox = new TextBox();
             logTabControl = new TabControl();
             programLogTab = new TabPage();
             programLogTextBox = new RichTextBox();
             danserLogTab = new TabPage();
             danserLogTextBox = new RichTextBox();
             settingsTab = new TabPage();
+            selectOsuDirectoryButton = new Button();
+            osuDirectoryTextBox = new TextBox();
+            osuDirectoryLabel = new Label();
+            openDanserFolderButton = new Button();
+            openDanserGuiButton = new Button();
+            showDanserTerminalCheckBox = new CheckBox();
             selectDanserSettingsButton = new Button();
-            danserSettingsPathTextbox = new TextBox();
+            danserSettingsPathTextBox = new TextBox();
             danserSettingsLabel = new Label();
             deleteRenderedVideoCheckBox = new CheckBox();
             danserSettingsFileDialog = new OpenFileDialog();
-            showDanserTerminalCheckBox = new CheckBox();
+            osuDirectoryFileDialog = new OpenFileDialog();
+            danserArgumentsLabel = new Label();
             mainTabControl.SuspendLayout();
             renderTab.SuspendLayout();
             logTabControl.SuspendLayout();
@@ -66,13 +73,13 @@
             settingsTab.SuspendLayout();
             SuspendLayout();
             // 
-            // webhookUrlTextbox
+            // webhookUrlTextBox
             // 
-            webhookUrlTextbox.Location = new Point(94, 0);
-            webhookUrlTextbox.Name = "webhookUrlTextbox";
-            webhookUrlTextbox.PlaceholderText = "Webhook URL";
-            webhookUrlTextbox.Size = new Size(685, 23);
-            webhookUrlTextbox.TabIndex = 4;
+            webhookUrlTextBox.Location = new Point(94, 0);
+            webhookUrlTextBox.Name = "webhookUrlTextBox";
+            webhookUrlTextBox.PlaceholderText = "Webhook URL";
+            webhookUrlTextBox.Size = new Size(690, 23);
+            webhookUrlTextBox.TabIndex = 4;
             // 
             // danserBinaryLabel
             // 
@@ -83,16 +90,16 @@
             danserBinaryLabel.TabIndex = 10;
             danserBinaryLabel.Text = "danser binary:";
             // 
-            // danserBinaryPathTextbox
+            // danserBinaryPathTextBox
             // 
-            danserBinaryPathTextbox.Location = new Point(94, 29);
-            danserBinaryPathTextbox.Name = "danserBinaryPathTextbox";
-            danserBinaryPathTextbox.Size = new Size(604, 23);
-            danserBinaryPathTextbox.TabIndex = 11;
+            danserBinaryPathTextBox.Location = new Point(94, 29);
+            danserBinaryPathTextBox.Name = "danserBinaryPathTextBox";
+            danserBinaryPathTextBox.Size = new Size(363, 23);
+            danserBinaryPathTextBox.TabIndex = 11;
             // 
             // selectDanserBinaryButton
             // 
-            selectDanserBinaryButton.Location = new Point(704, 29);
+            selectDanserBinaryButton.Location = new Point(463, 28);
             selectDanserBinaryButton.Name = "selectDanserBinaryButton";
             selectDanserBinaryButton.Size = new Size(75, 23);
             selectDanserBinaryButton.TabIndex = 12;
@@ -102,7 +109,7 @@
             // 
             // selectReplayFileButton
             // 
-            selectReplayFileButton.Location = new Point(411, 0);
+            selectReplayFileButton.Location = new Point(597, -1);
             selectReplayFileButton.Name = "selectReplayFileButton";
             selectReplayFileButton.Size = new Size(75, 23);
             selectReplayFileButton.TabIndex = 13;
@@ -123,12 +130,12 @@
             // 
             replayFilePathTextBox.Location = new Point(75, 0);
             replayFilePathTextBox.Name = "replayFilePathTextBox";
-            replayFilePathTextBox.Size = new Size(330, 23);
+            replayFilePathTextBox.Size = new Size(516, 23);
             replayFilePathTextBox.TabIndex = 16;
             // 
             // renderAndUploadButton
             // 
-            renderAndUploadButton.Location = new Point(370, 29);
+            renderAndUploadButton.Location = new Point(678, -1);
             renderAndUploadButton.Name = "renderAndUploadButton";
             renderAndUploadButton.Size = new Size(116, 23);
             renderAndUploadButton.TabIndex = 17;
@@ -138,12 +145,15 @@
             // 
             // danserBinaryFileDialog
             // 
-            danserBinaryFileDialog.FileName = "openFileDialog2";
+            danserBinaryFileDialog.Filter = "danser binary (*.exe)|*.exe";
+            danserBinaryFileDialog.RestoreDirectory = true;
+            danserBinaryFileDialog.Title = "Select a danser binary (danser-cli.exe)";
             danserBinaryFileDialog.FileOk += danserBinaryFileDialog_FileOk;
             // 
             // replayFileDialog
             // 
-            replayFileDialog.FileName = "openFileDialog2";
+            replayFileDialog.Filter = "osu! replay file (*.osr)|*.osr";
+            replayFileDialog.Title = "Select an osu! replay file";
             replayFileDialog.FileOk += replayFileDialog_FileOk;
             // 
             // webhookUrlLabel
@@ -167,10 +177,11 @@
             // 
             // renderTab
             // 
-            renderTab.Controls.Add(endTimeTextBox);
-            renderTab.Controls.Add(startTimeTextBox);
-            renderTab.Controls.Add(endTimeLabel);
-            renderTab.Controls.Add(startTimeLabel);
+            renderTab.Controls.Add(danserArgumentsLabel);
+            renderTab.Controls.Add(uploadProgressLabel);
+            renderTab.Controls.Add(uploadProgressBar);
+            renderTab.Controls.Add(renderLatestReplayButton);
+            renderTab.Controls.Add(danserArgumentsTextBox);
             renderTab.Controls.Add(logTabControl);
             renderTab.Controls.Add(replayFileLabel);
             renderTab.Controls.Add(renderAndUploadButton);
@@ -184,37 +195,38 @@
             renderTab.Text = "Render";
             renderTab.UseVisualStyleBackColor = true;
             // 
-            // endTimeTextBox
+            // uploadProgressLabel
             // 
-            endTimeTextBox.Location = new Point(246, 29);
-            endTimeTextBox.Name = "endTimeTextBox";
-            endTimeTextBox.Size = new Size(100, 23);
-            endTimeTextBox.TabIndex = 25;
+            uploadProgressLabel.AutoSize = true;
+            uploadProgressLabel.Location = new Point(272, 33);
+            uploadProgressLabel.Name = "uploadProgressLabel";
+            uploadProgressLabel.Size = new Size(96, 15);
+            uploadProgressLabel.TabIndex = 28;
+            uploadProgressLabel.Text = "Upload Progress:";
             // 
-            // startTimeTextBox
+            // uploadProgressBar
             // 
-            startTimeTextBox.Location = new Point(75, 29);
-            startTimeTextBox.Name = "startTimeTextBox";
-            startTimeTextBox.Size = new Size(100, 23);
-            startTimeTextBox.TabIndex = 24;
+            uploadProgressBar.Location = new Point(374, 28);
+            uploadProgressBar.Name = "uploadProgressBar";
+            uploadProgressBar.Size = new Size(290, 23);
+            uploadProgressBar.TabIndex = 27;
             // 
-            // endTimeLabel
+            // renderLatestReplayButton
             // 
-            endTimeLabel.AutoSize = true;
-            endTimeLabel.Location = new Point(181, 33);
-            endTimeLabel.Name = "endTimeLabel";
-            endTimeLabel.Size = new Size(59, 15);
-            endTimeLabel.TabIndex = 23;
-            endTimeLabel.Text = "End Time:";
+            renderLatestReplayButton.Location = new Point(670, 28);
+            renderLatestReplayButton.Name = "renderLatestReplayButton";
+            renderLatestReplayButton.Size = new Size(124, 23);
+            renderLatestReplayButton.TabIndex = 26;
+            renderLatestReplayButton.Text = "Render Latest Replay";
+            renderLatestReplayButton.UseVisualStyleBackColor = true;
+            renderLatestReplayButton.Click += renderLatestReplayButton_Click;
             // 
-            // startTimeLabel
+            // danserArgumentsTextBox
             // 
-            startTimeLabel.AutoSize = true;
-            startTimeLabel.Location = new Point(3, 33);
-            startTimeLabel.Name = "startTimeLabel";
-            startTimeLabel.Size = new Size(63, 15);
-            startTimeLabel.TabIndex = 22;
-            startTimeLabel.Text = "Start Time:";
+            danserArgumentsTextBox.Location = new Point(114, 28);
+            danserArgumentsTextBox.Name = "danserArgumentsTextBox";
+            danserArgumentsTextBox.Size = new Size(152, 23);
+            danserArgumentsTextBox.TabIndex = 24;
             // 
             // logTabControl
             // 
@@ -268,15 +280,20 @@
             // 
             // settingsTab
             // 
+            settingsTab.Controls.Add(selectOsuDirectoryButton);
+            settingsTab.Controls.Add(osuDirectoryTextBox);
+            settingsTab.Controls.Add(osuDirectoryLabel);
+            settingsTab.Controls.Add(openDanserFolderButton);
+            settingsTab.Controls.Add(openDanserGuiButton);
             settingsTab.Controls.Add(showDanserTerminalCheckBox);
             settingsTab.Controls.Add(selectDanserSettingsButton);
-            settingsTab.Controls.Add(danserSettingsPathTextbox);
+            settingsTab.Controls.Add(danserSettingsPathTextBox);
             settingsTab.Controls.Add(danserSettingsLabel);
             settingsTab.Controls.Add(deleteRenderedVideoCheckBox);
             settingsTab.Controls.Add(webhookUrlLabel);
-            settingsTab.Controls.Add(webhookUrlTextbox);
+            settingsTab.Controls.Add(webhookUrlTextBox);
             settingsTab.Controls.Add(danserBinaryLabel);
-            settingsTab.Controls.Add(danserBinaryPathTextbox);
+            settingsTab.Controls.Add(danserBinaryPathTextBox);
             settingsTab.Controls.Add(selectDanserBinaryButton);
             settingsTab.Location = new Point(4, 24);
             settingsTab.Name = "settingsTab";
@@ -286,9 +303,65 @@
             settingsTab.Text = "Settings";
             settingsTab.UseVisualStyleBackColor = true;
             // 
+            // selectOsuDirectoryButton
+            // 
+            selectOsuDirectoryButton.Location = new Point(687, 85);
+            selectOsuDirectoryButton.Name = "selectOsuDirectoryButton";
+            selectOsuDirectoryButton.Size = new Size(97, 23);
+            selectOsuDirectoryButton.TabIndex = 29;
+            selectOsuDirectoryButton.Text = "Select Directory";
+            selectOsuDirectoryButton.UseVisualStyleBackColor = true;
+            selectOsuDirectoryButton.Click += selectOsuDirectoryButton_Click;
+            // 
+            // osuDirectoryTextBox
+            // 
+            osuDirectoryTextBox.Location = new Point(94, 86);
+            osuDirectoryTextBox.Name = "osuDirectoryTextBox";
+            osuDirectoryTextBox.Size = new Size(587, 23);
+            osuDirectoryTextBox.TabIndex = 28;
+            // 
+            // osuDirectoryLabel
+            // 
+            osuDirectoryLabel.AutoSize = true;
+            osuDirectoryLabel.Location = new Point(3, 89);
+            osuDirectoryLabel.Name = "osuDirectoryLabel";
+            osuDirectoryLabel.Size = new Size(82, 15);
+            osuDirectoryLabel.TabIndex = 27;
+            osuDirectoryLabel.Text = "osu! directory:";
+            // 
+            // openDanserFolderButton
+            // 
+            openDanserFolderButton.Location = new Point(667, 28);
+            openDanserFolderButton.Name = "openDanserFolderButton";
+            openDanserFolderButton.Size = new Size(117, 23);
+            openDanserFolderButton.TabIndex = 26;
+            openDanserFolderButton.Text = "Open danser folder";
+            openDanserFolderButton.UseVisualStyleBackColor = true;
+            openDanserFolderButton.Click += openDanserFolderButton_Click;
+            // 
+            // openDanserGuiButton
+            // 
+            openDanserGuiButton.Location = new Point(544, 28);
+            openDanserGuiButton.Name = "openDanserGuiButton";
+            openDanserGuiButton.Size = new Size(117, 23);
+            openDanserGuiButton.TabIndex = 25;
+            openDanserGuiButton.Text = "Open danser GUI";
+            openDanserGuiButton.UseVisualStyleBackColor = true;
+            openDanserGuiButton.Click += openDanserGuiButton_Click;
+            // 
+            // showDanserTerminalCheckBox
+            // 
+            showDanserTerminalCheckBox.AutoSize = true;
+            showDanserTerminalCheckBox.Location = new Point(6, 140);
+            showDanserTerminalCheckBox.Name = "showDanserTerminalCheckBox";
+            showDanserTerminalCheckBox.Size = new Size(145, 19);
+            showDanserTerminalCheckBox.TabIndex = 24;
+            showDanserTerminalCheckBox.Text = "Show danser terminal?";
+            showDanserTerminalCheckBox.UseVisualStyleBackColor = true;
+            // 
             // selectDanserSettingsButton
             // 
-            selectDanserSettingsButton.Location = new Point(704, 61);
+            selectDanserSettingsButton.Location = new Point(709, 57);
             selectDanserSettingsButton.Name = "selectDanserSettingsButton";
             selectDanserSettingsButton.Size = new Size(75, 23);
             selectDanserSettingsButton.TabIndex = 23;
@@ -296,12 +369,12 @@
             selectDanserSettingsButton.UseVisualStyleBackColor = true;
             selectDanserSettingsButton.Click += selectDanserSettingsButton_Click;
             // 
-            // danserSettingsPathTextbox
+            // danserSettingsPathTextBox
             // 
-            danserSettingsPathTextbox.Location = new Point(94, 58);
-            danserSettingsPathTextbox.Name = "danserSettingsPathTextbox";
-            danserSettingsPathTextbox.Size = new Size(604, 23);
-            danserSettingsPathTextbox.TabIndex = 22;
+            danserSettingsPathTextBox.Location = new Point(94, 58);
+            danserSettingsPathTextBox.Name = "danserSettingsPathTextBox";
+            danserSettingsPathTextBox.Size = new Size(609, 23);
+            danserSettingsPathTextBox.TabIndex = 22;
             // 
             // danserSettingsLabel
             // 
@@ -315,7 +388,7 @@
             // deleteRenderedVideoCheckBox
             // 
             deleteRenderedVideoCheckBox.AutoSize = true;
-            deleteRenderedVideoCheckBox.Location = new Point(6, 87);
+            deleteRenderedVideoCheckBox.Location = new Point(6, 115);
             deleteRenderedVideoCheckBox.Name = "deleteRenderedVideoCheckBox";
             deleteRenderedVideoCheckBox.Size = new Size(146, 19);
             deleteRenderedVideoCheckBox.TabIndex = 20;
@@ -324,18 +397,26 @@
             // 
             // danserSettingsFileDialog
             // 
-            danserSettingsFileDialog.FileName = "openFileDialog2";
+            danserSettingsFileDialog.Filter = "danser settings file (*.json)|*.json";
+            danserSettingsFileDialog.RestoreDirectory = true;
+            danserSettingsFileDialog.Title = "Select a danser settings file";
             danserSettingsFileDialog.FileOk += danserSettingsFileDialog_FileOk;
             // 
-            // showDanserTerminalCheckBox
+            // osuDirectoryFileDialog
             // 
-            showDanserTerminalCheckBox.AutoSize = true;
-            showDanserTerminalCheckBox.Location = new Point(6, 112);
-            showDanserTerminalCheckBox.Name = "showDanserTerminalCheckBox";
-            showDanserTerminalCheckBox.Size = new Size(145, 19);
-            showDanserTerminalCheckBox.TabIndex = 24;
-            showDanserTerminalCheckBox.Text = "Show danser terminal?";
-            showDanserTerminalCheckBox.UseVisualStyleBackColor = true;
+            osuDirectoryFileDialog.FileName = "osuDirectoryFileDialog";
+            osuDirectoryFileDialog.Filter = "osu! binary (*.exe)|*.exe";
+            osuDirectoryFileDialog.Title = "Select osu!.exe";
+            osuDirectoryFileDialog.FileOk += osuDirectoryFileDialog_FileOk;
+            // 
+            // danserArgumentsLabel
+            // 
+            danserArgumentsLabel.AutoSize = true;
+            danserArgumentsLabel.Location = new Point(3, 31);
+            danserArgumentsLabel.Name = "danserArgumentsLabel";
+            danserArgumentsLabel.Size = new Size(105, 15);
+            danserArgumentsLabel.TabIndex = 29;
+            danserArgumentsLabel.Text = "danser arguments:";
             // 
             // Form
             // 
@@ -358,9 +439,9 @@
         }
 
         #endregion
-        private TextBox webhookUrlTextbox;
+        private TextBox webhookUrlTextBox;
         private Label danserBinaryLabel;
-        private TextBox danserBinaryPathTextbox;
+        private TextBox danserBinaryPathTextBox;
         private Button selectDanserBinaryButton;
         private Button selectReplayFileButton;
         private Label replayFileLabel;
@@ -379,13 +460,21 @@
         private RichTextBox danserLogTextBox;
         private CheckBox deleteRenderedVideoCheckBox;
         private TextBox endTimeTextBox;
-        private TextBox startTimeTextBox;
-        private Label endTimeLabel;
-        private Label startTimeLabel;
+        private TextBox danserArgumentsTextBox;
         private Button selectDanserSettingsButton;
-        private TextBox danserSettingsPathTextbox;
+        private TextBox danserSettingsPathTextBox;
         private Label danserSettingsLabel;
         private OpenFileDialog danserSettingsFileDialog;
         private CheckBox showDanserTerminalCheckBox;
+        private Button openDanserGuiButton;
+        private Button openDanserFolderButton;
+        private Button selectOsuDirectoryButton;
+        private TextBox osuDirectoryTextBox;
+        private Label osuDirectoryLabel;
+        private OpenFileDialog osuDirectoryFileDialog;
+        private Button renderLatestReplayButton;
+        private ProgressBar uploadProgressBar;
+        private Label uploadProgressLabel;
+        private Label danserArgumentsLabel;
     }
 }

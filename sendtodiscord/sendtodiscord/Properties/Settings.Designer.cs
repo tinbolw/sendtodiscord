@@ -82,5 +82,29 @@ namespace sendtodiscord.Properties {
                 this["showDanserTerminal"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string osuDirectory {
+            get {
+                return ((string)(this["osuDirectory"]));
+            }
+            set {
+                this["osuDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string danserArguments {
+            get {
+                return ((string)(this["danserArguments"]));
+            }
+            set {
+                this["danserArguments"] = value;
+            }
+        }
     }
 }
